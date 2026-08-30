@@ -26,8 +26,19 @@ body.lock{overflow:hidden;position:fixed;width:100%;height:100%}
 h1{width:100%;text-align:center;margin-top:10px;font-size:14px;color:#aaa}
 .container{width:400px;max-width:90%;height:160px;padding:15px;margin:20px auto 0;border-radius:10px;background:#fff}
 .dashboard{width:100%;height:100%;box-sizing:border-box;border:2px solid #ecerec;border-radius:5px;position:relative}
-.dashboard #intro,#notSupport{color:#cecece;display:block;text-align:center;line-height:120px;font-size:20px}
+.dashboard #intro,#notSupport{color:#cecece;display:block;text-align:center;line-height:normal;font-size:20px}
 #notSupport{display:none}
+#dragHint{
+    width:100%;
+    height:100%;
+    border:1px dashed #333333;
+    border-radius:6px;
+    color:#444;
+    background:transparent;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
 [draggable]{-webkit-user-select:none;user-select:none;cursor:pointer}
 .btn-box{position:absolute;bottom:8px;left:50%;transform:translateX(-50%)}
 #selectBtn{padding:6px 28px;background:#2563eb;color:#fff;border:none;border-radius:4px;pointer-events:none}
@@ -44,7 +55,7 @@ h1{width:100%;text-align:center;margin-top:10px;font-size:14px;color:#aaa}
 <h1>360全景图</h1>
 <div class="container">
 <div id="dashboard" class="dashboard">
-<div id="intro">拖拽全景图到此展示</div>
+<div id="dragHint">拖拽全景图到此展示</div>
 <div id="notSupport">不支持此文件</div>
 <div class="btn-box">
 <button id="selectBtn">选择图片</button>
@@ -64,10 +75,8 @@ function showFileInfo(url){
     });
     $('#intro').hide();
     document.body.classList.add('lock');
-    bindDrag("viewer");
 }
-function bindDrag(id){
-    const el=document.getElementById(id);
+function bindDrag(el){
     el.addEventListener("dragover",e=>{e.preventDefault();e.stopPropagation()});
     el.addEventListener("dragenter",e=>{e.preventDefault();e.stopPropagation()});
     el.addEventListener("drop",e=>{
@@ -81,7 +90,7 @@ function bindDrag(id){
         }
     });
 }
-bindDrag("intro");
+bindDrag(document.documentElement);
 document.getElementById('fileInput').addEventListener('change',ev=>{
     const file=ev.target.files[0];
     ev.target.value='';
