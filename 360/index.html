@@ -52,7 +52,7 @@ h1{width:100%;text-align:center;margin-top:10px;font-size:14px;color:#aaa}
 <script src="index_files/photo-sphere-viewer.min.js"></script>
 <div id="viewer"></div>
 <div id="intro">
-<h1>360</h1>
+<h1>360全景图</h1>
 <div class="container">
 <div id="dashboard" class="dashboard">
 <div id="dragHint">拖拽全景图到此展示</div>
@@ -65,16 +65,35 @@ h1{width:100%;text-align:center;margin-top:10px;font-size:14px;color:#aaa}
 </div>
 </div>
 <script>
+let psvViewer = null;
+
+function isPanorama(imgW,imgH){
+  let ratio = imgW / imgH;
+  return ratio > 1.8 && ratio < 2.25;
+}
+
 function showFileInfo(url){
-    $('#viewer').html('').show();
-    new PhotoSphereViewer.Viewer({
+  if(psvViewer){
+    psvViewer.destroy();
+    psvViewer = null;
+  }
+  $('#viewer').html('').show();
+  let img = new Image();
+  img.onload = function(){
+    if(isPanorama(this.width,this.height)){
+      psvViewer = new PhotoSphereViewer.Viewer({
         container:document.querySelector('#viewer'),
         panorama:url,
         useXmpData:false,
         moveInertia:false
-    });
+      });
+    }else{
+      $('#viewer').html(`<img src="${url}" style="width:100%;height:100%;object-fit:contain;background:#000;">`);
+    }
     $('#intro').hide();
     document.body.classList.add('lock');
+  }
+  img.src = url;
 }
 function bindDrag(el){
     el.addEventListener("dragover",e=>{e.preventDefault();e.stopPropagation()});
