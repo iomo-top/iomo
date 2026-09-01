@@ -26,8 +26,7 @@ body.lock{overflow:hidden;position:fixed;width:100%;height:100%}
 h1{width:100%;text-align:center;margin-top:10px;font-size:14px;color:#aaa}
 .container{width:400px;max-width:90%;height:160px;padding:15px;margin:20px auto 0;border-radius:10px;background:#fff}
 .dashboard{width:100%;height:100%;box-sizing:border-box;border:2px solid #ecerec;border-radius:5px;position:relative}
-.dashboard #intro,#notSupport{color:#cecece;display:block;text-align:center;line-height:normal;font-size:20px}
-#notSupport{display:none}
+.dashboard #intro{color:#cecece;display:block;text-align:center;line-height:normal;font-size:20px}
 #dragHint{
     width:100%;
     height:100%;
@@ -56,7 +55,6 @@ h1{width:100%;text-align:center;margin-top:10px;font-size:14px;color:#aaa}
 <div class="container">
 <div id="dashboard" class="dashboard">
 <div id="dragHint">拖拽全景图到此展示</div>
-<div id="notSupport">不支持此文件</div>
 <div class="btn-box">
 <button id="selectBtn">选择图片</button>
 <input type="file" id="fileInput" accept="image/*">
@@ -104,8 +102,6 @@ function bindDrag(el){
         const fileUrl=URL.createObjectURL(files[0]);
         if(files[0].type.indexOf('image')===0){
             showFileInfo(fileUrl);
-        }else{
-            $('#intro').hide();$('#notSupport').show();
         }
     });
 }
