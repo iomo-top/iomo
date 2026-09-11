@@ -92,7 +92,7 @@ function showFileInfo(url) {
   let img = new Image();
   img.onload = function() {
     if (isPanorama(this.width, this.height)) {
-      psvViewer = new PhotoSphereViewer.Viewer({ container: document.querySelector('#viewer'), panorama: url, useXmpData: false, moveInertia: false, autorotateSpeed: "0.15rpm" });
+      psvViewer = new PhotoSphereViewer.Viewer({ container: document.querySelector('#viewer'), panorama: url, useXmpData: false, moveInertia: false });
     } else {
       $('#viewer').append('<img src="' + url + '" style="width:100%;height:100%;object-fit:contain;background:#000;">');
     }
